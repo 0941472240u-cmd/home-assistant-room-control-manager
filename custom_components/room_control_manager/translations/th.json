@@ -3,6 +3,17 @@
   "config": {
     "flow_title": "{name}",
     "step": {
+      "user": {
+        "title": "ข้อมูลห้อง",
+        "description": "สร้างตัวควบคุมแยกสำหรับแต่ละห้อง รุ่น 0.1.0 ทำงานแบบ Dry Run เสมอ",
+        "data": {
+          "room_name": "ชื่อห้อง",
+          "area_id": "พื้นที่ใน Home Assistant"
+        },
+        "data_description": {
+          "area_id": "เลือกได้ ไม่บังคับ ใช้เพื่อจัดหมวดหมู่ห้อง"
+        }
+      },
       "room": {
         "title": "ข้อมูลห้อง",
         "description": "สร้างตัวควบคุมแยกสำหรับแต่ละห้อง รุ่น 0.1.0 ทำงานแบบ Dry Run เสมอ",

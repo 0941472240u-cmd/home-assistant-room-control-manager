@@ -3,6 +3,17 @@
   "config": {
     "flow_title": "{name}",
     "step": {
+      "user": {
+        "title": "Room information",
+        "description": "Create an independent room controller. Version 0.1.0 is always Dry Run.",
+        "data": {
+          "room_name": "Room name",
+          "area_id": "Home Assistant area"
+        },
+        "data_description": {
+          "area_id": "Optional area used only to organize the room."
+        }
+      },
       "room": {
         "title": "Room information",
         "description": "Create an independent room controller. Version 0.1.0 is always Dry Run.",
