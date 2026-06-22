@@ -1,0 +1,232 @@
+{
+  "title": "ตัวจัดการระบบห้อง",
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "room": {
+        "title": "ข้อมูลห้อง",
+        "description": "สร้างตัวควบคุมแยกสำหรับแต่ละห้อง รุ่น 0.1.0 ทำงานแบบ Dry Run เสมอ",
+        "data": {
+          "room_name": "ชื่อห้อง",
+          "area_id": "พื้นที่ใน Home Assistant"
+        },
+        "data_description": {
+          "area_id": "เลือกได้ ไม่บังคับ ใช้เพื่อจัดหมวดหมู่ห้อง"
+        }
+      },
+      "sensors": {
+        "title": "เลือกเซ็นเซอร์",
+        "description": "เซ็นเซอร์ทุกชนิดเป็นตัวเลือก และเลือก Presence, Motion, อุณหภูมิ และแสงได้หลายตัว",
+        "data": {
+          "door_sensor": "เซ็นเซอร์ประตู",
+          "presence_sensors": "เซ็นเซอร์ Presence",
+          "motion_sensors": "เซ็นเซอร์ความเคลื่อนไหว",
+          "temperature_sensors": "เซ็นเซอร์อุณหภูมิ",
+          "illuminance_sensors": "เซ็นเซอร์แสง"
+        }
+      },
+      "actuators": {
+        "title": "เลือกอุปกรณ์ควบคุม",
+        "description": "รุ่น 0.1.0 จะอ่านสถานะเท่านั้นและไม่ส่งคำสั่งจริง",
+        "data": {
+          "light_entity": "ไฟ",
+          "fan_entity": "พัดลม",
+          "ac_control_type": "วิธีควบคุมแอร์"
+        }
+      },
+      "climate": {
+        "title": "เลือก Climate Entity",
+        "data": {
+          "climate_entity": "Climate Entity"
+        }
+      },
+      "ir": {
+        "title": "เลือก Script IR ของแอร์",
+        "description": "Script เปิดและปิดต้องเป็นคนละตัว และรุ่น 0.1.0 จะไม่เรียก Script เหล่านี้",
+        "data": {
+          "ir_power_on": "Script เปิดแอร์",
+          "ir_power_off": "Script ปิดแอร์",
+          "ir_mode_cool": "Script โหมดเย็น",
+          "ir_temperature_control": "วิธีตั้งอุณหภูมิ",
+          "ir_temperature_script": "Script ตั้งอุณหภูมิโดยตรง",
+          "ir_temperature_field": "ชื่อฟิลด์อุณหภูมิ",
+          "ir_temp_up": "Script เพิ่มอุณหภูมิ",
+          "ir_temp_down": "Script ลดอุณหภูมิ",
+          "ir_fan_auto": "Script พัดลมอัตโนมัติ",
+          "ir_fan_low": "Script พัดลมเบา",
+          "ir_fan_medium": "Script พัดลมกลาง",
+          "ir_fan_high": "Script พัดลมแรง"
+        }
+      },
+      "review": {
+        "title": "ตรวจสอบก่อนบันทึก",
+        "description": "คำเตือน: {warnings} เซ็นเซอร์ที่ใช้ร่วมกัน: {shared_sensors} อุปกรณ์ที่ชนกัน: {conflicts} โหมดทำงาน: {mode}",
+        "data": {
+          "confirm": "บันทึกห้องนี้"
+        }
+      }
+    },
+    "error": {
+      "room_name_required": "กรุณากรอกชื่อห้อง",
+      "confirmation_required": "กรุณายืนยันก่อนบันทึก",
+      "actuator_in_use": "อุปกรณ์สั่งงานหรือ Script IR ถูกห้องอื่นครอบครองแล้ว",
+      "wrong_domain": "Entity ที่เลือกมี Domain ไม่ตรงกับหน้าที่",
+      "same_light_and_fan": "ห้ามใช้ Entity เดียวกันเป็นทั้งไฟและพัดลม",
+      "climate_required": "กรุณาเลือก Climate Entity",
+      "ir_power_scripts_required": "กรุณาเลือก Script เปิดและปิดแอร์",
+      "ir_power_scripts_same": "Script เปิดและปิดแอร์ต้องเป็นคนละตัว",
+      "ir_direct_script_required": "กรุณาเลือก Script ตั้งอุณหภูมิโดยตรง",
+      "ir_up_down_required": "กรุณาเลือกทั้ง Script เพิ่มและลดอุณหภูมิ",
+      "invalid_entity": "Entity ID ที่เลือกไม่ถูกต้อง"
+    },
+    "abort": {
+      "already_configured": "ห้องนี้ถูกตั้งค่าแล้ว",
+      "reconfigure_successful": "อัปเดตการตั้งค่าห้องแล้ว"
+    }
+  },
+  "options": {
+    "step": {
+      "modules": {
+        "title": "เปิดหรือปิดโมดูล",
+        "description": "เปิดเฉพาะโมดูลที่ต้องการให้ประเมินผล",
+        "data": {
+          "enable_presence": "ประเมิน Presence",
+          "enable_door": "ประเมินประตู",
+          "enable_lighting": "ประเมินไฟ",
+          "enable_fan": "ประเมินพัดลม",
+          "enable_climate": "ประเมินแอร์"
+        }
+      },
+      "binary": {
+        "title": "Presence และ Motion",
+        "data": {
+          "presence_mode": "วิธีรวม Presence",
+          "presence_primary": "Presence หลัก",
+          "motion_mode": "วิธีรวม Motion",
+          "motion_primary": "Motion หลัก",
+          "no_occupancy_delay": "เวลายืนยันว่าไม่มีคน (วินาที)"
+        }
+      },
+      "numeric": {
+        "title": "อุณหภูมิและแสง",
+        "data": {
+          "temperature_mode": "วิธีรวมอุณหภูมิ",
+          "temperature_primary": "เซ็นเซอร์อุณหภูมิหลัก",
+          "illuminance_mode": "วิธีรวมค่าแสง",
+          "illuminance_primary": "เซ็นเซอร์แสงหลัก"
+        }
+      },
+      "thresholds": {
+        "title": "ค่าเกณฑ์และเวลาหน่วง",
+        "data": {
+          "light_on_lux": "ค่า Lux เปิดไฟ",
+          "light_off_lux": "ค่า Lux ปิดไฟ",
+          "fan_on_temperature": "อุณหภูมิเปิดพัดลม",
+          "fan_off_temperature": "อุณหภูมิปิดพัดลม",
+          "climate_on_temperature": "อุณหภูมิเปิดแอร์",
+          "climate_off_temperature": "อุณหภูมิปิดแอร์",
+          "door_open_delay": "เวลาประตูเปิดค้าง (วินาที)",
+          "startup_hold": "เวลารอหลังเริ่มระบบ (วินาที)"
+        }
+      },
+      "review": {
+        "title": "ตรวจสอบค่าตั้ง",
+        "description": "คำเตือน: {warnings} ระบบยังคงเป็น {mode} และปิด Dry Run ไม่ได้ในรุ่น 0.1.0",
+        "data": {
+          "confirm": "บันทึกค่าตั้ง"
+        }
+      }
+    },
+    "error": {
+      "confirmation_required": "กรุณายืนยันก่อนบันทึก",
+      "dry_run_required": "รุ่น 0.1.0 บังคับใช้ Dry Run",
+      "light_hysteresis_invalid": "ค่า Lux เปิดไฟต้องต่ำกว่าค่า Lux ปิดไฟ",
+      "fan_hysteresis_invalid": "อุณหภูมิเปิดพัดลมต้องสูงกว่าอุณหภูมิปิดพัดลม",
+      "climate_hysteresis_invalid": "อุณหภูมิเปิดแอร์ต้องสูงกว่าอุณหภูมิปิดแอร์",
+      "primary_not_selected": "ต้องเลือกเซ็นเซอร์หลักจากรายการที่ตั้งไว้",
+      "negative_delay": "ค่าหน่วงเวลาต้องไม่เป็นค่าติดลบ"
+    }
+  },
+  "selector": {
+    "ac_control_type": {
+      "options": {
+        "none": "No air conditioner",
+        "climate": "Climate entity",
+        "ir_scripts": "IR scripts"
+      }
+    },
+    "ir_temperature_control": {
+      "options": {
+        "none": "Do not set temperature",
+        "direct_script": "Direct script",
+        "up_down": "Temperature up/down scripts"
+      }
+    },
+    "presence_mode": {
+      "options": {
+        "or": "OR",
+        "and": "AND",
+        "primary": "Primary"
+      }
+    },
+    "motion_mode": {
+      "options": {
+        "or": "OR",
+        "and": "AND",
+        "primary": "Primary"
+      }
+    },
+    "temperature_mode": {
+      "options": {
+        "primary": "Primary",
+        "minimum": "Minimum",
+        "maximum": "Maximum",
+        "average": "Average"
+      }
+    },
+    "illuminance_mode": {
+      "options": {
+        "primary": "Primary",
+        "minimum": "Minimum",
+        "maximum": "Maximum",
+        "average": "Average"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "configuration_status": {
+        "name": "สถานะการตั้งค่า"
+      },
+      "last_decision": {
+        "name": "คำสั่งที่ระบบตั้งใจล่าสุด"
+      },
+      "last_reason": {
+        "name": "เหตุผลล่าสุด"
+      },
+      "ready_modules": {
+        "name": "โมดูลที่พร้อม"
+      },
+      "problem_modules": {
+        "name": "โมดูลที่มีปัญหา"
+      }
+    },
+    "binary_sensor": {
+      "dry_run": {
+        "name": "โหมด Dry Run"
+      },
+      "configuration_problem": {
+        "name": "มีปัญหาการตั้งค่า"
+      },
+      "effective_occupancy": {
+        "name": "สรุปว่ามีคนอยู่"
+      }
+    }
+  },
+  "issues": {
+    "module_configuration_problem": {
+      "title": "โมดูลของห้องต้องได้รับการแก้ไข",
+      "description": "ห้อง {room}: โมดูล {module} มีปัญหา {problem} กรุณาเข้า Integration และใช้ Reconfigure เพื่อเลือก Entity ใหม่"
+    }
+  }
+}
