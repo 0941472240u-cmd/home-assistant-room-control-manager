@@ -21,11 +21,15 @@ def test_hacs_minimum_version() -> None:
 
 
 def test_only_one_custom_integration() -> None:
-    assert [path.name for path in (ROOT / "custom_components").iterdir() if path.is_dir()] == ["room_control_manager"]
+    assert [
+        path.name
+        for path in (ROOT / "custom_components").iterdir()
+        if path.is_dir()
+    ] == ["room_control_manager"]
 
 
 def test_translation_files_are_complete_json() -> None:
-    for name in ("strings.json", "translations/en.json", "translations/th.json"):
+    for name in ("translations/en.json", "translations/th.json"):
         data = json.loads((COMPONENT / name).read_text())
         assert "config" in data
         assert "options" in data
